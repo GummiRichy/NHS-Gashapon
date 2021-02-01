@@ -48,7 +48,7 @@
 	<div class="game_qu">
     	<!--go-->
         <div class="game_go">1 ticket/spin</div>
-         <div class="wdjifen">10000</div>
+        <div class="wdjifen">NHS Gashapon</div>
     </div>
     
     <!--球-->
@@ -82,26 +82,47 @@
 
 
 
-<!--中奖 获得一等奖-->
+<!--if python returns 1-->
 <div class="zonj_zezc none" id="jianpin_one">
 	<div class="jpzs aiqiyi tc_anima">
     	<em><img src="static/close.png"/></em>
         <h2>
-        	<b>Congrats！<br>You got X！</b>
+        	<b>Congrats！<br>You got a chocolate！</b>
         </h2>
-    </div></div>
+	</div>
+</div>
 
-<!--中奖获得二等奖-->
+<!--if python returns -1-->
+<div class="zonj_zezc none" id="jianpin_oneb">
+	<div class="jpzs aiqiyi tc_anima">
+    	<em><img src="static/close.png"/></em>
+        <h2>
+        	<b>This code has already been used and has given a chocolate!</b>
+        </h2>
+	</div>
+</div>
+
+<!--if python returns 2-->
 <div class="zonj_zezc none"  id="jianpin_two">
 	<div class="jpzs aiqiyi tc_anima">
     	<em><img src="static/close.png"/></em>
         <h2>
-        	<b>Congrats！<br>You got Y！</b>
+        	<b>Congrats！<br>You got a Starburst！</b>
         </h2>
     </div>
 </div>
 
-<!--中奖 获得三等奖-->
+<!--if python returns -2-->
+<div class="zonj_zezc none" id="jianpin_twob">
+	<div class="jpzs aiqiyi tc_anima">
+    	<em><img src="static/close.png"/></em>
+        <h2>
+        	<b>This code has already been used and has given a Starburst!</b>
+        </h2>
+	</div>
+</div>
+
+<!--if python returns 3-->
 <div class="zonj_zezc none"  id="jianpin_three">
 	<div class="jpzs aiqiyi tc_anima">
     	<em><img src="static/close.png"/></em>
@@ -112,12 +133,12 @@
 </div>
 
 
-<!--没有中奖-->
+<!--if python returns 0-->
 <div class="zonj_zezc none" id="jianpin_kong">
 	<div class="jpzs aiqiyi tc_anima">
     	<em><img src="static/close.png"/></em>
         <h2>
-        	<b>Congrats！<br>You got W！</b>
+        	<b>Sorry, please enter a valid code. </b>
         </h2>
     </div>
 </div>
@@ -142,12 +163,20 @@ $(document).ready(function(e) {
 	$("#jianpin_one em img").click(function(){
 		$("#jianpin_one").hide();
 		}
+	);
+	$("#jianpin_oneb em img").click(function(){
+		$("#jianpin_oneb").hide();
+		}
 	);		
 	//二等奖 关闭
 	$("#jianpin_two em img").click(function(){
 		$("#jianpin_two").hide();
 		}
-	);		
+	);
+	$("#jianpin_twob em img").click(function(){
+		$("#jianpin_twob").hide();
+		}
+	);			
 	//三等奖 关闭
 	$("#jianpin_three em img").click(function(){
 		$("#jianpin_three").hide();
@@ -213,6 +242,7 @@ function draw(){
 	},1100);	
 	setTimeout(function(){
 		switch(outcome){
+			case 0:$(".zjdl").children("span").addClass("diaL_zero");break;
 			case 1:$(".zjdl").children("span").addClass("diaL_one");break;
 			case 2:$(".zjdl").children("span").addClass("diaL_two");break;
 			case 3:$(".zjdl").children("span").addClass("diaL_three");break;
@@ -221,10 +251,12 @@ function draw(){
 		$(".zjdl").removeClass("none").addClass("dila_Y");
 				setTimeout(function (){
 				switch(outcome){
+					case 0:$("#jianpin_kong").show();break;
 					case 1:$("#jianpin_one").show();break;
+					case -1:$("#jianpin_oneb").show();break;
 					case 2:$("#jianpin_two").show();break;
+					case -2:$("#jianpin_twob").show();break;
 					case 3:$("#jianpin_three").show();break;
-					case 4:$("#jianpin_kong").show();break;
 				}
 			},900);
 		},1100)
@@ -232,7 +264,7 @@ function draw(){
 	//取消动画
 	setTimeout(function (){
 			$(".zjdl").addClass("none").removeClass("dila_Y");
-			$(".wdjifen").html(score);
+			//$(".wdjifen").html(score);
 			$(".zjdl").children("span").removeAttr('class');
 			
 		},2500)
