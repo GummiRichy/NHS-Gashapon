@@ -20,6 +20,11 @@ def handle_code():
     
     print(req)
     print(type(req))
+
+    if not type(req) == type(""):
+        res = make_response(jsonify(4), 200)
+        return res
+
     if not req.isdigit():
         res = make_response(jsonify(4), 200)
         return res
