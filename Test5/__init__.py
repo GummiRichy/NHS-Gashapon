@@ -14,7 +14,7 @@ assert sum(probabilities) == 1
 assert len(prizes) == len(probabilities)
 
 
-GITHUB_TOKEN = "717bf42aac79664efdc389e2b15002e41bd6d56d"
+GITHUB_TOKEN = "a5e19f669cb256593788a27b1995f0e61dcee83e"
 
 
 hashes = requests.get("https://pastebin.com/raw/DUV5ztr1").text.split("\n")
@@ -33,10 +33,10 @@ def save_used_codes(used_codes):
     filename = "gashapon_used_codes"
     headers = {'Authorization': f'token {GITHUB_TOKEN}'}
     r = requests.patch('https://api.github.com/gists/' + gist_id, data=json.dumps({'files':{filename:{"content":content}}}),headers=headers) 
-    print(r.json())
+    #print(r.json())
 
 def get_used_codes():
-    url = "https://gist.githubusercontent.com/EricWu2003/9099922858882e94fdb16ca3c9293dfa/raw/3907432ba280813e5c02beff484e84a21527ac9d/gashapon_used_codes"
+    url = "https://gist.githubusercontent.com/EricWu2003/9099922858882e94fdb16ca3c9293dfa/raw/gashapon_used_codes"
     used_codes = json.loads(requests.get(url).text)
     return used_codes
 
@@ -52,7 +52,8 @@ def home():
     return render_template("index.html")
 
 @app.route("/getcode", methods = ["POST"])
-def handle_code(): 
+def handle_code():
+    global used_codes
     code = request.get_json()
     
     #print(req)
@@ -70,6 +71,8 @@ def handle_code():
 
 
     if sha256(code.encode('utf-8')).hexdigest() in hashes:
+        print(repr(code))
+        print(repr(used_codes))
         if code not in used_codes.keys():
             result = random.randint(1, len(prizes))
 
