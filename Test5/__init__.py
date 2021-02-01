@@ -56,8 +56,7 @@ def get_used_codes():
 used_codes = get_used_codes()
 
 
-with open('static/used_codes.json') as f:
-    used_codes = json.load(f)
+
 
 
 @app.route("/")
