@@ -53,7 +53,7 @@ def get_used_codes():
     return used_codes
 
 
-print("used codes: " + str(get_used_codes()))
+used_codes = get_used_codes()
 
 
 with open('static/used_codes.json') as f:
