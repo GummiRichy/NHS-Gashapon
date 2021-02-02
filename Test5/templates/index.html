@@ -11,8 +11,8 @@
 
 <link href="static/style.css" type="text/css" rel="stylesheet"/>
 
-<title>扭蛋机</title>
-<!--移动端版本兼容 -->
+<title>Hun NHS Gashapon</title>
+<!--version change -->
 <script type="text/javascript">
     var phoneWidth =  parseInt(window.screen.width);
     var phoneScale = phoneWidth/640;
@@ -22,15 +22,15 @@
         // andriod 2.3
         if(version>2.3){
             document.write('<meta name="viewport" content="width=640, minimum-scale = '+phoneScale+', maximum-scale = '+phoneScale+', target-densitydpi=device-dpi">');
-        // andriod 2.3以上
+        // andriod 2.3+
         }else{
             document.write('<meta name="viewport" content="width=640, target-densitydpi=device-dpi">');
         }
-        // 其他系统
+        // other systems
     } else {
         document.write('<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">');
     }
-    //微信去掉下方刷新栏
+    //wechat
     if(RegExp("MicroMessenger").test(navigator.userAgent)){
         document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
             WeixinJSBridge.call('hideToolbar');
@@ -44,14 +44,14 @@
 <body>
 
 <div class="niu_danji">
-	<!--机器-->
+	<!--gashpon machine-->
 	<div class="game_qu">
     	<!--go-->
         <div class="game_go">1 ticket/spin</div>
         <div class="wdjifen">NHS Gashapon</div>
     </div>
     
-    <!--球-->
+    <!--balls-->
     <div class="dan_gund">
         <span  class="qiu_1 diaol_1"></span>
         <span  class="qiu_2 diaol_2"> </span>
@@ -71,7 +71,7 @@
                
     </div>
 
-     <!--中奖掉落-->
+     <!--prize drop-->
    <div class="medon"><img src="static/mendong.png"/></div>
    <div class="zjdl ">
    		<span></span>
@@ -144,7 +144,7 @@
 </div>
 
 
-<!--积分不足-->
+<!--zero points-->
 <div class="zonj_zezc none" id="no_jifeng">
 	<div class="jpzs aiqiyi tc_anima">
 		<em><img src="static/close.png"/></em>
@@ -159,7 +159,7 @@
 
 
 $(document).ready(function(e) {
-	//一等奖 关闭
+	//prize 1 close
 	$("#jianpin_one em img").click(function(){
 		$("#jianpin_one").hide();
 		}
@@ -168,7 +168,7 @@ $(document).ready(function(e) {
 		$("#jianpin_oneb").hide();
 		}
 	);		
-	//二等奖 关闭
+	//prize 2 close
 	$("#jianpin_two em img").click(function(){
 		$("#jianpin_two").hide();
 		}
@@ -177,17 +177,17 @@ $(document).ready(function(e) {
 		$("#jianpin_twob").hide();
 		}
 	);			
-	//三等奖 关闭
+	//prize 3 close
 	$("#jianpin_three em img").click(function(){
 		$("#jianpin_three").hide();
 		}
 	);			
-	//没有中奖 关闭
+	//no prize
 	$("#jianpin_kong em img").click(function(){
 		$("#jianpin_kong").hide();
 		}
 	);			
-	//积分不足 关闭
+	//no point
 	$("#no_jifeng em img").click(function(){
 		$("#no_jifeng").hide();
 		}
@@ -261,7 +261,7 @@ function draw(){
 			},900);
 		},1100)
 	
-	//取消动画
+	//cancel animation
 	setTimeout(function (){
 			$(".zjdl").addClass("none").removeClass("dila_Y");
 			//$(".wdjifen").html(score);
