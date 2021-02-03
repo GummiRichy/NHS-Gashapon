@@ -3,24 +3,24 @@ from flask import Flask, request, send_from_directory, render_template, jsonify,
 import os
 from hashlib import sha256
 import json
-import random
+from random import random
 import requests
 
 app = Flask(__name__)
 
-prizes = ("Chocolate", "Starburst")
-probabilities = (0.5, 0.5)
+prizes = ("Chocolate", "Strawberry Starburst", "Cherry Starburst", "Orange Starburst", "Lemon Starburst")
+probabilities = (0.4, 0.15, 0.15, 0.15, 0.15)
 assert sum(probabilities) == 1
 assert len(prizes) == len(probabilities)
 
 
-GITHUB_TOKEN = "a5e19f669cb256593788a27b1995f0e61dcee83e"
+GITHUB_TOKEN = "secret token here"
+USED_CODES_PATH = "static/used_codes.json"
 
 
 hashes = requests.get("https://pastebin.com/raw/DUV5ztr1").text.split("\n")
 hashes = [x.strip('\r') for x in hashes]
 #print(hashes)
-
 
 
 
@@ -34,16 +34,23 @@ def save_used_codes(used_codes):
     headers = {'Authorization': f'token {GITHUB_TOKEN}'}
     r = requests.patch('https://api.github.com/gists/' + gist_id, data=json.dumps({'files':{filename:{"content":content}}}),headers=headers) 
     #print(r.json())
+    with open(USED_CODES_PATH, 'w') as f:
+        f.write(content)
 
 def get_used_codes():
-    url = "https://gist.githubusercontent.com/EricWu2003/9099922858882e94fdb16ca3c9293dfa/raw/gashapon_used_codes"
-    used_codes = json.loads(requests.get(url).text)
-    return used_codes
+    with open(USED_CODES_PATH) as f:
+        return json.load(f)
 
 
-used_codes = get_used_codes()
-
-
+def pick_randomly():
+    #this number randomly picks a number from 1 to n inclusive (assuming there are n different types of prizes) according the the weighted probabilities
+    num = random()
+    for i in range(len(prizes)):
+        num -= probabilities[i]
+        if num < 0:
+            return i + 1
+    print("this should never really happen")
+    return len(prizes) + 1
 
 
 
@@ -53,7 +60,8 @@ def home():
 
 @app.route("/getcode", methods = ["POST"])
 def handle_code():
-    global used_codes
+    used_codes = get_used_codes()
+    
     code = request.get_json()
     
     #print(req)
@@ -71,16 +79,16 @@ def handle_code():
 
 
     if sha256(code.encode('utf-8')).hexdigest() in hashes:
-        print(repr(code))
-        print(repr(used_codes))
         if code not in used_codes.keys():
-            result = random.randint(1, len(prizes))
+            result = pick_randomly()
+            
 
             used_codes[code] = prizes[result - 1]
 
             save_used_codes(used_codes)
 
             res = make_response(jsonify(result), 200)
+
             return res
         else:
             result = prizes.index(used_codes[code]) + 1
