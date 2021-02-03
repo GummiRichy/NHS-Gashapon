@@ -107,7 +107,7 @@
 	<div class="jpzs aiqiyi tc_anima">
     	<em><img src="static/close.png"/></em>
         <h2>
-        	<b>Congrats！<br>You got a Starburst！</b>
+        	<b>Congrats！<br>You got a Strawberry Starburst！</b>
         </h2>
     </div>
 </div>
@@ -117,7 +117,7 @@
 	<div class="jpzs aiqiyi tc_anima">
     	<em><img src="static/close.png"/></em>
         <h2>
-        	<b>This code has already been used and has given a Starburst!</b>
+        	<b>This code has already been used and has given a Strawberry Starburst!</b>
         </h2>
 	</div>
 </div>
@@ -127,11 +127,60 @@
 	<div class="jpzs aiqiyi tc_anima">
     	<em><img src="static/close.png"/></em>
         <h2>
-        	<b>Congrats！<br>You got Z！</b>
+        	<b>Congrats！<br>You got a Cherry Starburst！</b>
         </h2>
     </div>
 </div>
 
+<!--if python returns -3-->
+<div class="zonj_zezc none" id="jianpin_threeb">
+	<div class="jpzs aiqiyi tc_anima">
+    	<em><img src="static/close.png"/></em>
+        <h2>
+        	<b>This code has already been used and has given a Cherry Starburst!</b>
+        </h2>
+	</div>
+</div>
+	
+<!--if python returns 4-->
+<div class="zonj_zezc none"  id="jianpin_four">
+	<div class="jpzs aiqiyi tc_anima">
+    	<em><img src="static/close.png"/></em>
+        <h2>
+        	<b>Congrats！<br>You got a Orange Starburst！</b>
+        </h2>
+    </div>
+</div>
+
+<!--if python returns -4-->
+<div class="zonj_zezc none" id="jianpin_fourb">
+	<div class="jpzs aiqiyi tc_anima">
+    	<em><img src="static/close.png"/></em>
+        <h2>
+        	<b>This code has already been used and has given an Orange Starburst!</b>
+        </h2>
+	</div>
+</div>
+
+<!--if python returns 5-->
+<div class="zonj_zezc none"  id="jianpin_five">
+	<div class="jpzs aiqiyi tc_anima">
+    	<em><img src="static/close.png"/></em>
+        <h2>
+        	<b>Congrats！<br>You got a Lemon Starburst！</b>
+        </h2>
+    </div>
+</div>
+
+<!--if python returns -5-->
+<div class="zonj_zezc none" id="jianpin_fiveb">
+	<div class="jpzs aiqiyi tc_anima">
+    	<em><img src="static/close.png"/></em>
+        <h2>
+        	<b>This code has already been used and has given a Lemon Starburst!</b>
+        </h2>
+	</div>
+</div>
 
 <!--if python returns 0-->
 <div class="zonj_zezc none" id="jianpin_kong">
@@ -181,7 +230,29 @@ $(document).ready(function(e) {
 	$("#jianpin_three em img").click(function(){
 		$("#jianpin_three").hide();
 		}
-	);			
+	);
+	$("#jianpin_threeb em img").click(function(){
+		$("#jianpin_threeb").hide();
+		}
+	);
+	//prize 4 close
+	$("#jianpin_four em img").click(function(){
+		$("#jianpin_four").hide();
+		}
+	);
+	$("#jianpin_fourb em img").click(function(){
+		$("#jianpin_fourb").hide();
+		}
+	);	
+	//prize 5 close
+	$("#jianpin_five em img").click(function(){
+		$("#jianpin_five").hide();
+		}
+	);
+	$("#jianpin_fiveb em img").click(function(){
+		$("#jianpin_fiveb").hide();
+		}
+	);	
 	//no prize
 	$("#jianpin_kong em img").click(function(){
 		$("#jianpin_kong").hide();
@@ -257,6 +328,11 @@ function draw(){
 					case 2:$("#jianpin_two").show();break;
 					case -2:$("#jianpin_twob").show();break;
 					case 3:$("#jianpin_three").show();break;
+					case -3:$("#jianpin_threeb").show();break
+					case 4:$("#jianpin_four").show();break;
+					case -4:$("#jianpin_fourb").show();break
+					case 5:$("#jianpin_five").show();break;
+					case -5:$("#jianpin_fiveb").show();break
 				}
 			},900);
 		},1100)
